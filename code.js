@@ -1,23 +1,46 @@
 function quicksort(array) {
-    var len = array.length, pivot = 0;
-    pivot = sort(array, stop, len);
-    while (pivot != 99)
-        pivot = sort(array, pivot + 1, len);
-        pivot = sort(array, 0, pivot - 1);
+    var stack = [];
+
+    stack.push(0);
+    stack.push(array.length - 1);
+    while (stack.length > 0) {
+        var high = stack.pop();
+        var low = stack.pop();
+        var pivot = sort(array, low, high);
+        if (low < pivot - 1) {
+            stack.push(low);
+            stack.push(pivot - 1);
+        }
+        if (pivot + 1 < high) {
+            stack.push(pivot + 1);
+            stack.push(high);
+        }
+    }
     return array;
 }
 
 function sort(array, low, high) {
-    var iter, pivot;
-    if (lo >= hi) return 99;
-    p = lo;
-    for (i = lo +1; i <= hi; i++)
-        if (array[iter] < array[lo])
-            var swap = array[++p];
-            array[p] = array[i];
-            array[i] = swap;
+    var pivot = array[low];
+    var left = low + 1;
+    var right = high;
+    var swap;
+
+    while (true) {
+        while (left <= right && array[left] <= pivot)
+            left++;
+        while (left <= right && array[right] >= pivot) {
+            right--;
+        }
+        if (left > right)
+            break;
+        swap = array[left];
+        array[left] = array[right];
+        array[right] = swap;
+    }
+
     swap = array[low];
-    array[low] = array[p];
-    array[p] = swap;
-    return p;
+    array[low] = array[right];
+    array[right] = swap;
+
+    return right;
 }
