@@ -1,6 +1,9 @@
 function quicksort(array) {
     var stack = [];
 
+    if(array.length == 0)
+        return array;
+
     stack.push(0);
     stack.push(array.length - 1);
     while (stack.length > 0) {
